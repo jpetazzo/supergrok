@@ -19,15 +19,21 @@ an optional port number) after that URL. For instance, to reach the service
 running on node 10.0.3.5 and exposed on port 8000, just go to the following
 address: http://xxxx.ngrok.io/10.0.3.5:8000 
 
-Note that NGINX will not rewrite absolute links contained in your pages. In
-other words, if you serve a web page containing a link to "/hello", it will
-translate to http://xxxx.ngrok.io/hello, which will not work. The correct
-link would be http://xxxx.ngrok.io/10.0.3.5:8000/hello! However, NGINX will
-rewrite "Location:" headers, so simple HTTP redirections should work.
-
 Here is the URL in a machine-catchable format (so you can grep ^URL= these
 messages, if you are so inclined):
 
 URL=$URL
+
+Note that NGINX will not rewrite absolute links contained in your pages. In
+other words, if you serve a web page containing a link to "/hello", it will
+translate to http://xxxx.ngrok.io/hello, which will not work. The correct
+link would be http://xxxx.ngrok.io/10.0.3.5:8000/hello! However, NGINX will
+rewrite "Location:" headers, so simple HTTP redirections should work. If it
+is a problem for you, you can run a dedicated ngrok tunnel for your service
+with the following command (assuming you want to expose the service running
+on node 10.0.3.5 and exposed on port 8000):
+docker run --net host -ti jpetazzo/ngrok http 10.0.3.5:8000
+
+Have fun!
 EOF
 wait
